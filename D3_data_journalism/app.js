@@ -53,14 +53,14 @@ d3.csv("data.csv").then(data => {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", d => x(d.poverty))
-        .attr("cy", d => y(d.healthcare))
+        .attr("cx", d => x(parsInt(d.poverty)))
+        .attr("cy", d => y(parseInt(d.healthcare)))
         .attr("r", 10)
 
     // labelArea
     // .append("text")
     // .attr("stroke", "#000000")
-    // .attr("dy", 14)
+    // .attr("abbr", 14)
     // .text("Evening");
 
     // const line = d3.line()
