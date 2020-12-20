@@ -24,8 +24,8 @@ d3.csv("data.csv").then(data => {
     console.log(data)
 
     const y = d3.scaleLinear()
-    .domain([0, d3.max(data.map(d => parseInt(d.healthcare) + 2))])
-    .range([chartHeight, 0])
+        .domain([0, d3.max(data.map(d => parseInt(d.healthcare) + 2))])
+        .range([chartHeight, 0])
 
     const x = d3.scaleLinear()
         .domain([d3.min(data.map(d => parseInt(d.poverty - 1))), d3.max(data.map(d => parseInt(d.poverty) + 2))])
@@ -42,10 +42,10 @@ d3.csv("data.csv").then(data => {
         .call(xAxis)
 
     const labelArea = svg
-    .append("g")
-    .attr(
-        "transform",
-        `translate(${svgWidth / 2}, ${svgHeight - margin.bottom + 30})`
+        .append("g")
+        .attr(
+            "transform",
+            `translate(${svgWidth / 2}, ${svgHeight - margin.bottom + 30})`
     );
 
     chartG.selectAll("circle")
@@ -73,19 +73,16 @@ d3.csv("data.csv").then(data => {
         .attr("dy", ".3em")
         .attr("text-anchor", "middle")
 
-    svg.append("text")
-        .attr("class", "y label")
-        .attr("text-anchor", "end")
-        .attr("y", 6)
-        .attr("dy", ".75em")
-        .attr("transform", "rotate(-90)")
-        .text("Lacks Healthcare (%)");
+    // svg.append("text")
+    //     .attr("class", "y label")
+    //     .attr("text-anchor", "end")
+    //     .attr("y", 450)
+    //     .attr("dx", ".1em")
+    //     .attr("transform", "rotate(-90)")
+    //     .text("Lacks Healthcare (%)");
 
     labelArea.append("text")
         .attr("stroke", "#000000")
-        .text("In Poverty (%)");
+        .text("Lacks Healthcare (%) (y-axis) vs. In Poverty (%) (x-axis)");
 
 })
-
-
-    // python -m http.server
