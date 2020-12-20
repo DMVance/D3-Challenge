@@ -17,6 +17,7 @@ const svg = d3.select("body").append("svg")
 
 const chartG = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`)
+  .classed("chart-group", true)
 
 d3.csv("data.csv").then(data => {
 
@@ -53,9 +54,29 @@ d3.csv("data.csv").then(data => {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", d => x(parsInt(d.poverty)))
-        .attr("cy", d => y(parseInt(d.healthcare)))
-        .attr("r", 10)
+        .attr("cx", d => x(d.poverty))
+        .attr("cy", d => y(d.healthcare))
+        .attr("stroke", "#5193e8")
+        .style("fill", "#5193e8")
+        .attr("r", 12)
+
+    const plotArea = chartG.append("g")
+        .classed("plot-area", true)
+    const circleG = plotArea.selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("transform", d => `translate(${x(d.poverty)}, ${y(d.healthcare)})`)
+
+    circleG.append("text")
+        .text(d => d.abbr)
+        .attr("stroke", "#FFFFFF")
+        .style("fill", "#FFFFFF")
+        .attr("dy", ".3em")
+        .attr("text-anchor", "middle")
+
+
+
 
     // labelArea
     // .append("text")
