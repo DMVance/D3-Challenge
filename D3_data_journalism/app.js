@@ -1,11 +1,11 @@
-const svgHeight = 400
-const svgWidth = 1000
+const svgHeight = 600
+const svgWidth = 1200
 
 const margin = {
     top: 50,
     right: 50,
     bottom: 50,
-    left: 50
+    left: 500
   }
 
 const chartHeight = svgHeight - margin.top - margin.bottom
@@ -24,11 +24,11 @@ d3.csv("data.csv").then(data => {
     console.log(data)
 
     const y = d3.scaleLinear()
-    .domain([0, d3.max(data.map(d => parseInt(d.healthcare)))])
+    .domain([0, d3.max(data.map(d => parseInt(d.healthcare) + 2))])
     .range([chartHeight, 0])
 
     const x = d3.scaleLinear()
-        .domain([0, d3.max(data.map(d => parseInt(d.poverty)))])
+        .domain([d3.min(data.map(d => parseInt(d.poverty - 1))), d3.max(data.map(d => parseInt(d.poverty) + 2))])
         .range([0, chartWidth])
 
     const yAxis = d3.axisLeft(y)
@@ -47,8 +47,6 @@ d3.csv("data.csv").then(data => {
         "transform",
         `translate(${svgWidth / 2}, ${svgHeight - margin.bottom + 30})`
     );
-    
-    labelArea.append("text").attr("stroke", "#000000").text("Poverty");
 
     chartG.selectAll("circle")
         .data(data)
@@ -75,27 +73,17 @@ d3.csv("data.csv").then(data => {
         .attr("dy", ".3em")
         .attr("text-anchor", "middle")
 
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Lacks Healthcare (%)");
 
-
-
-    // labelArea
-    // .append("text")
-    // .attr("stroke", "#000000")
-    // .attr("abbr", 14)
-    // .text("Evening");
-
-    // const line = d3.line()
-    //     .x(d => x(parseDate(d.date)))
-    //     .y(d => y(d.morning))
-
-    // chartG.append("path")
-    //     .attr("d", line(data))
-    //     .attr("fill", "none")
-    //     .attr("stroke", "#FF0000")
-
-    // console.log(line(data))
-
-    
+    labelArea.append("text")
+        .attr("stroke", "#000000")
+        .text("In Poverty (%)");
 
 })
 
